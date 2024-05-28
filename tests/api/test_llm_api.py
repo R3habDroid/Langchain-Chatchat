@@ -55,13 +55,13 @@ def test_change_model(api="/llm_model/change_model"):
 
     model_workers = get_configured_models()
 
-    availabel_new_models = list(set(model_workers) - set(running_models))
-    assert len(availabel_new_models) > 0
-    print(availabel_new_models)
+    available_new_models = list(set(model_workers) - set(running_models))
+    assert len(available_new_models) > 0
+    print(available_new_models)
 
     local_models = [x for x in running_models if not get_model_worker_config(x).get("online_api")]
     model_name = random.choice(local_models)
-    new_model_name = random.choice(availabel_new_models)
+    new_model_name = random.choice(available_new_models)
     print(f"\n尝试将模型从 {model_name} 切换到 {new_model_name}")
     r = requests.post(url, json={"model_name": model_name, "new_model_name": new_model_name})
     assert r.status_code == 200
